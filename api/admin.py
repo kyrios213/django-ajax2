@@ -1,8 +1,5 @@
 from django.contrib import admin
 
-from .models import test
+from .models import Post
 
-class testadmin(admin.ModelAdmin):
-    list_display = ('name', 'age')
-
-admin.site.register(test, testadmin)
+admin.site.register(Post)
