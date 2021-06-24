@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block scripts %}{% endblock scripts %}
+
+{% block title %}{{ post.title }} detail{% endblock title %}
+
+{% block content %}
+    {{ post.title }}
+    <hr>
+    {{ post.body }}
+{% endblock content %}
