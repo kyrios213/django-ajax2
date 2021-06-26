@@ -80,5 +80,21 @@ def post_detail(request, pk):
 
     return render(request, 'posts/detail.html', context)
 
-def hello_world_view(request):
-    return JsonResponse({'text': 'hello world'})
+def update_post_view(request, pk):
+    post = Post.objects.get(pk=pk)
+    if request.is_ajax():
+        new_title = request.POST.get('title')
+        new_body = request.POST.get('body')
+        post.title = new_title
+        post.body = new_body
+        post.save()
+    return JsonResponse({
+        'title': new_title,
+        'body': new_body,
+    })
+
+def delete_post_view(request, pk):
+    post = Post.objects.get(pk=pk)
+    if request.is_ajax():
+        post.delete()
+    return JsonResponse({})

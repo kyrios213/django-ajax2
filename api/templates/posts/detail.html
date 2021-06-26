@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block scripts %}
     <script type="text/javascript" src="{% static 'posts/detail.js' %}" defer></script>
@@ -8,10 +9,55 @@
 {% block title %}{{ post.title }} detail{% endblock title %}
 
 {% block content %}
+    <!--Update Modal -->
+    <div class="modal fade" id="updatePostModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="alert-box"></div>
+                    <form id="update-form">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!--Delete Modal -->
+    <div class="modal fade" id="deletePostModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class='mb-1'>Are you sure you want to delete "<b>{{ post.title }}</b>"?</P>
+                </div> 
+                <div class="modal-footer">
+                    <form id="delete-form">
+                        {% csrf_token %}
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Delete</button>
+                    </form>
+                </div>          
+            </div>
+        </div>
+    </div>
     <div class="text-center">
         <button id="back-btn" class="btn btn-info text-light">Back</button>
-        <button id="update-btn" class="not-visible btn btn-primary">Update</button>
-        <button id="delete-btn" class="not-visible btn btn-danger">Delete</button>
+        <button id="update-btn" class="not-visible btn btn-primary" data-bs-toggle="modal" data-bs-target="#updatePostModel">Update</button>
+        <button id="delete-btn" class="not-visible btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePostModel">Delete</button>
     </div>
     
     <div id="spinner-box" class='text-center my-3'>
